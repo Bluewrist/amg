@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Slider Start -->
+<div class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="navbar bg-light">
+                    <ul class="navbar-nav">
+                        {% for c in cats %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'product_list' %}?q={{ c.name }}">
+                                    </i>{{ c.name }}</a>
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-6">
+                <div class="header-slider normal-slider">
+                    <div class="header-slider-item">
+                        <img src="{% static 'img/nav_3.jpg' %}" alt="Slider Image" />
+                        <div class="header-slider-caption">
+                            <p>Welcome to AMG Navara</p>
+                            <a class="btn" href="{% url 'product_list' %}"><i class="fa fa-shopping-cart"></i>See
+                                More</a>
+                        </div>
+                    </div>
+                    <div class="header-slider-item">
+                        <img src="{% static 'img/nav_4.jpg' %}" alt="Slider Image" />
+                        <div class="header-slider-caption">
+                            <p>Suppliers of all Nissan navara parts</p>
+                            <a class="btn" href="{% url 'product_list' %}"><i class="fa fa-shopping-cart"></i>Shop
+                                Now</a>
+                        </div>
+                    </div>
+                    <div class="header-slider-item">
+                        <img src="{% static 'img/nav_5.jpg' %}" alt="Slider Image" />
+                        <div class="header-slider-caption">
+                            <p>Nissan Navara parts and more</p>
+                            <a class="btn" href="{% url 'product_list' %}"><i class="fa fa-shopping-cart"></i>Shop
+                                Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="header-img">
+                    <div class="img-item">
+                        <img src="{% static 'img/navara_4.jpg' %}" />
+                        <a class="img-text" href="">
+                            <p>Engine parts and body parts</p>
+                        </a>
+                    </div>
+                    <div class="img-item">
+                        <img src="{% static 'img/navara.jpg' %}" />
+                        <a class="img-text" href="">
+                            <p>Engine parts and body parts</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Slider End -->
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{%  url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{%  url 'product_list' %}">Products</a></li>
+            <li class="breadcrumb-item active">Product List</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product List Start -->
+<div class="product-view">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+
+                    {% for c in pdts %}
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <div class="product-title">
+                                <a href="{%  url 'product_detail' c.id %}">{{ c.part_name }}</a>
+                                <div class="ratting">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="product-image">
+                                <a href="{%  url 'product_detail' c.id %}">
+                                    <img src="{{ c.product_img.url }}" alt="{{ c.part_name }}">
+                                </a>
+                                <div class="product-action">
+                                    <a href="#"><i class="fa fa-cart-plus"></i></a>
+                                    <a href="#"><i class="fa fa-heart"></i></a>
+                                    <a href="#"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-price">
+                                <h3><span>$</span>{{ c.price|floatformat:2}}</h3>
+                                <a class="btn" href="{%  url 'product_detail' c.id %}"><i
+                                        class="fa fa-shopping-cart"></i>Detail</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+
+
+
+
+                </div>
+
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {% if pdts.has_previous %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="?page={{ pdts.previous_page_number }}"
+                                    tabindex="-1">Previous</a>
+                            </li>
+                            {% else %}
+                            {% endif %}
+
+                            {% for i in pdts.paginator.page_range %}
+                            {% if i == product_list.number %}
+                            <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if pdts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ pdts.next_page_number }}">Next</a>
+                            </li>
+                            {% else %}
+
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Pagination Start -->
+            </div>
+
+            <!-- Side Bar Start -->
+            <div class="col-lg-4 sidebar">
+                <div class="sidebar-widget category">
+                    <h2 class="title">Category</h2>
+                    <nav class="navbar bg-light">
+                        <ul class="navbar-nav">
+                            {% for c in cats %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'product_list' %}?q={{ c.name }}"><i
+                                        class="fa fa-female"></i>{{ c.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Side Bar End -->
+        </div>
+    </div>
+</div>
+<!-- Product List End -->
+<!-- Review End -->
+{% endblock %}

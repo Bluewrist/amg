@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">Product Detail</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product Detail Start -->
+<div class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="product-detail-top">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="product-slider-single normal-slider">
+                                <img src="{{ product.product_img.url}}" alt="{{ product.part_name }}">
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-7">
+                            <div class="product-content">
+                                <div class="title">
+                                    <h2>{{ product.part_name }}</h2>
+                                </div>
+                                
+                                <div class="price">
+                                    <h4>Price:</h4>
+                                    <p>${{ product.price|floatformat:2 }} </p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row product-detail-bottom">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
+                            </li>
+                            
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="description" class="container tab-pane active">
+                                <h4>Product description</h4>
+                                <p>
+                                    {{ product.part_detail }}
+                                </p>
+                            </div>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Bar Start -->
+            <div class="col-lg-4 sidebar">
+                <div class="sidebar-widget category">
+                    <h2 class="title">Category</h2>
+                    <nav class="navbar bg-light">
+                        <ul class="navbar-nav">
+                            {% for c in cats %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'product_list' %}?q={{ c.name }}"><i class="fa fa-female"></i>{{c.name}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- Side Bar End -->
+        </div>
+    </div>
+</div>
+<!-- Product Detail End -->
+
+<!-- Brand Start -->
+
+<!-- Brand End -->
+
+{% endblock %}
